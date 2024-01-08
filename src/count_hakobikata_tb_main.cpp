@@ -55,7 +55,7 @@ void listHakobikataRecursive(const int n_source,
 
     // POOL2DSTの場合
     if(n_pool > 0
-       // && n_source == 0 /* 「SRCからの運搬を優先する」場合 */
+       && n_source == 0 /* 「SRCからの運搬を優先する」場合 */
     ){
         std::vector<ACTION> case_pool2dst = soremade_no_hakobikata;
         case_pool2dst.push_back(POOL2DST);
