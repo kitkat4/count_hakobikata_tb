@@ -19,7 +19,7 @@ add_executable(generate_scenario_descriptions
   src/generate_scenario_descriptions_main.cpp
 )
 
-target_link_libraris(generate_scenario_descriptions
+target_link_libraries(generate_scenario_descriptions
   ${YAML_CPP_LIBRARIES}
 )
 
