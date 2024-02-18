@@ -1,13 +1,19 @@
-#include <count_hakobikata_tb/utils.hpp>
+#include <utils.hpp>
+
+
 
 int main(int argc, char** argv){
 
-    if(argc != 3){
-        std::cout << "Usage: " << argv[0] << " <num of items in source> <maximum num of temporay pool>" << std::endl;
+    if(argc != 2){
+        std::cout << "Usage: " << argv[0] << " <scenario generation config YAML>" << std::endl;
         return 1;
     }
 
-    const int n_source = std::stoi(argv[1]);
+    const std::string config_yaml_path = argv[1];
+    
+    YAML::Node config_yaml = YAML::LoadFile(config_yaml_path);
+
+    const int n_source = config_yaml["objects"].size();
     const int max_n_pool = std::stoi(argv[2]);
 
     std::vector<std::vector<ACTION> > result;
@@ -22,4 +28,5 @@ int main(int argc, char** argv){
 
     return 0;
 }
+
 

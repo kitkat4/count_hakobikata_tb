@@ -1,0 +1,49 @@
+
+
+# 登場する車両（=能動的に動く存在）を配列で記述する。人間は現時点では考慮しない。
+vehicles:
+  - vehicle_id: 1                # vehicle間で重複のない整数
+    vehicle_type: forklift       # 当面、以下があれば足りるはず：forklift (フォークリフト）, truck （トラック）
+    name: agf1                   # vehicle間で重複のない任意の文字列
+    initial_pose:                # 初期位置・姿勢を指定
+      waypoint: 50               # 初期位置は必ずいずれかのwaypointとする。
+      theta_deg: 180              # waypointは位置しか指定できないので、姿勢を別途指定している。world座標系。[deg]
+    description: "fbr.urdf"      # リンク構造を記述する設定ファイル(URDF)のパス。ファイル名に命名規則は設けない
+    waypoint_list: "waypoint_list_forklift.csv" # その車両の通ることのできる場所をおおまかに指定するwaypointリスト。他の車両と同じファイルでも、違うファイルでもいい。
+    station_list: "staion_list_agf1.csv" # その車両の動き方を生成する上で参照されるstationリスト。他の車両のstationリストと同じファイルでも、違うファイルでもいい。
+    max_velocity: 1.0            # 最大車速を[m/s]で指定
+  - vehicle_id: 2
+    vehicle_type: truck
+    name: elf
+    initial_pose:
+      waypoint: 1000
+      theta_deg: 90
+    description: "sample_truck.urdf"
+    waypoint_list: "waypoint_list_truck.csv"
+    max_velocity: 5.0
+
+
+# 登場する物体（=全く動かないか、他の車両に追随して動く存在）を配列で記述する。
+objects:
+  - object_id: 1                # object間で重複のない整数
+    stick_to: "truck::nidai"    # 何と連動して動くかを、名前空間で区切ったリンク名で記載する。動かない物体の場合はnullを指定することを想定するが、当面は動く物体（荷物）だけ考えれば良いように思う。
+    name: pallet1               # object間で重複のない文字列
+    initial_pose:               # 初期位置・姿勢を指定する。
+      # 初期位置・姿勢を記述するための座標系を指定する。グローバル座標系の場合worldを指定する。
+      # ローカル座標系の場合、::で名前空間を区切りながら座標系の名前を指定するものとし、最初の1個はvehicleの名前、それ以降はURDFで記述したリンクの名前（例：agf1::innermast）。
+      frame_id: "truck::nidai"
+      x_m: -5
+      y_m: 1.5
+      z_m: 1.0
+      theta_deg: 90
+  - object_id: 2
+    stick_to: "truck::nidai"
+    name: pallet2
+    initial_pose:
+      frame_id: "truck::nidai"
+      x_m: -5
+      y_m: 2.7
+      z_m: 1.0
+      theta_deg: 90
+
+
